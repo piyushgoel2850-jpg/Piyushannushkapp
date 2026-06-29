@@ -11,28 +11,23 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import { SAMPLE_COMMUNITIES, SAMPLE_POSTS } from "../data/constants";
-import CommunityChat from "../components/CommunityChat";
+import { useCommunity } from "../context/CommunityContext";
 
 export default function CommunitiesPage() {
-  const [selectedCommunity, setSelectedCommunity] = useState<string | null>(null);
-  const [showChat, setShowChat] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const { selectedCommunity, selectCommunity, openChat, clearCommunity } = useCommunity();
 
   const community = selectedCommunity
-    ? SAMPLE_COMMUNITIES.find((c) => c.id === selectedCommunity)
+    ? SAMPLE_COMMUNITIES.find((c) => c.id === selectedCommunity.id)
     : null;
 
   const communityPosts = selectedCommunity
-    ? SAMPLE_POSTS.filter((p) => p.community_id === selectedCommunity)
+    ? SAMPLE_POSTS.filter((p) => p.community_id === selectedCommunity.id)
     : [];
 
   const filteredCommunities = SAMPLE_COMMUNITIES.filter((c) =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  if (showChat && community) {
-    return <CommunityChat community={community} onClose={() => setShowChat(false)} />;
-  }
 
   if (selectedCommunity && community) {
     return (
@@ -41,7 +36,7 @@ export default function CommunitiesPage() {
         <div className="sticky top-0 z-30 bg-[#FFF8F0]/95 backdrop-blur-md border-b border-gray-100 px-4 py-4">
           <div className="max-w-2xl mx-auto flex items-center gap-3">
             <button
-              onClick={() => setSelectedCommunity(null)}
+              onClick={clearCommunity}
               className="p-2 rounded-xl hover:bg-gray-100 transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -68,7 +63,7 @@ export default function CommunitiesPage() {
             <p className="text-gray-600">{community.description}</p>
             <div className="flex items-center gap-4 mt-4">
               <button
-                onClick={() => setShowChat(true)}
+                onClick={() => openChat(community)}
                 className="flex items-center gap-2 text-sm font-medium transition-colors hover:scale-105"
                 style={{ color: community.color }}
               >
@@ -170,7 +165,7 @@ export default function CommunitiesPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              onClick={() => setSelectedCommunity(community.id)}
+              onClick={() => selectCommunity(community)}
               className="bg-white rounded-2xl p-4 border border-gray-100 hover:shadow-lg transition-all cursor-pointer"
             >
               <div className="flex items-start gap-3">

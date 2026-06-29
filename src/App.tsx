@@ -10,11 +10,27 @@ import ChatPage from "./pages/ChatPage";
 import ProfilePage from "./pages/ProfilePage";
 import AdminPage from "./pages/AdminPage";
 import BottomNav from "./components/BottomNav";
+import { CommunityProvider } from "./context/CommunityContext";
+import CommunityChat from "./components/CommunityChat";
+import { useCommunity } from "./context/CommunityContext";
 
 function AppLayout({ children }: { children: React.ReactNode }) {
   return (
+    <CommunityProvider>
+      <AppLayoutInner>{children}</AppLayoutInner>
+    </CommunityProvider>
+  );
+}
+
+function AppLayoutInner({ children }: { children: React.ReactNode }) {
+  const { selectedCommunity, showChat, closeChat } = useCommunity();
+
+  return (
     <>
       {children}
+      {selectedCommunity && showChat && (
+        <CommunityChat community={selectedCommunity} onClose={closeChat} />
+      )}
       <BottomNav />
     </>
   );

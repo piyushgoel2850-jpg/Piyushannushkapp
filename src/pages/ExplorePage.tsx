@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Search,
   TrendingUp,
@@ -19,6 +19,7 @@ import {
   SAMPLE_EVENTS,
   SAMPLE_LEADERBOARD,
 } from "../data/constants";
+import { useCommunity } from "../context/CommunityContext";
 
 const tabs = [
   { id: "all", label: "All", icon: Flame },
@@ -30,6 +31,8 @@ const tabs = [
 export default function ExplorePage() {
   const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const { selectCommunity } = useCommunity();
+  const navigate = useNavigate();
 
   const filteredCommunities = SAMPLE_COMMUNITIES.filter((c) =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -102,6 +105,10 @@ export default function ExplorePage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
+                  onClick={() => {
+                    selectCommunity(community);
+                    navigate("/app/communities");
+                  }}
                   className="bg-white rounded-2xl p-4 border border-gray-100 hover:shadow-lg transition-shadow cursor-pointer"
                 >
                   <div className="flex items-start gap-3">

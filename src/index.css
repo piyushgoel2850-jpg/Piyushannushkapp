@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #FFF8F0;
+    color: #2D3748;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+@layer components {
+  .polaroid {
+    @apply bg-white p-3 pb-8 shadow-lg transform rotate-1 transition-all duration-300;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 8px 8px 0px rgba(0,0,0,0.05);
+  }
+
+  .polaroid:hover {
+    @apply rotate-0 scale-105;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 12px 12px 0px rgba(0,0,0,0.05);
+  }
+
+  .sticky-note {
+    @apply relative p-4 transform rotate-2;
+    background: linear-gradient(135deg, #FDFFB6 0%, #FFF9C4 100%);
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .sticky-note::before {
+    content: '';
+    @apply absolute top-0 left-1/2 w-16 h-4 -translate-x-1/2 -translate-y-1/2;
+    background: rgba(0,0,0,0.1);
+    filter: blur(2px);
+  }
+
+  .torn-paper {
+    @apply relative bg-white p-6;
+    clip-path: polygon(
+      0% 2%, 3% 0%, 7% 2%, 12% 0%, 18% 2%, 25% 0%, 32% 2%, 40% 0%,
+      48% 2%, 55% 0%, 63% 2%, 70% 0%, 78% 2%, 85% 0%, 92% 2%, 100% 0%,
+      100% 98%, 97% 100%, 93% 98%, 88% 100%, 82% 98%, 75% 100%, 68% 98%,
+      60% 100%, 52% 98%, 45% 100%, 37% 98%, 30% 100%, 22% 98%, 15% 100%,
+      8% 98%, 0% 100%
+    );
+  }
+
+  .scrapbook-card {
+    @apply bg-white rounded-lg p-5 shadow-md border-2;
+    border-color: rgba(0,0,0,0.05);
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(255,181,186,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(160,196,255,0.1) 0%, transparent 50%);
+  }
+
+  .masonry-grid {
+    @apply columns-1 sm:columns-2 lg:columns-3 gap-4;
+  }
+
+  .masonry-item {
+    @apply break-inside-avoid mb-4;
+  }
+
+  .handwritten {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #FFB5BA 0%, #C9B1FF 50%, #A0C4FF 100%);
+  }
+
+  .glass-card {
+    @apply backdrop-blur-md bg-white/70 rounded-2xl border border-white/50 shadow-lg;
+  }
+
+  .interest-pill {
+    @apply px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer;
+  }
+
+  .interest-pill:hover {
+    @apply scale-105 shadow-md;
+  }
+
+  .interest-pill.active {
+    @apply ring-2 ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 rounded-full font-semibold text-white transition-all duration-200 shadow-md;
+    background: linear-gradient(135deg, #FFB5BA 0%, #C9B1FF 100%);
+  }
+
+  .btn-primary:hover {
+    @apply shadow-lg scale-105;
+    background: linear-gradient(135deg, #FF9AA2 0%, #BDB2FF 100%);
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 rounded-full font-semibold transition-all duration-200 shadow-md bg-white text-gray-700;
+  }
+
+  .btn-secondary:hover {
+    @apply shadow-lg scale-105 bg-gray-50;
+  }
+
+  .nav-item {
+    @apply flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all duration-200 text-gray-500;
+  }
+
+  .nav-item.active {
+    @apply text-pink-500 bg-pink-50;
+  }
+
+  .nav-item:hover:not(.active) {
+    @apply text-gray-700 bg-gray-50;
+  }
+
+  .page-transition {
+    @apply animate-fade-in;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
